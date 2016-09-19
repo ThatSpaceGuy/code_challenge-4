@@ -1,3 +1,11 @@
--- Database name
+-- Database name:
+-- TreatDB
 
--- Document you create tables pSQL here
+-- Document your create tables pSQL here
+--
+-- CREATE TABLE treat (
+-- 	id SERIAL PRIMARY KEY,
+-- 	name VARCHAR(200),
+-- 	description VARCHAR(500),
+-- 	pic VARCHAR(500)
+-- );
