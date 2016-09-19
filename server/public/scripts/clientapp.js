@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
   // get treats on load
+
   getTreats();
 
   /**---------- Event Handling ----------**/
@@ -38,7 +39,7 @@ $(document).ready(function () {
     })
     .done(function (treatArray) {
       console.log('GET /treats returned ', treatArray);
-
+      clearDom();
       $.each(treatArray, function (index, treat) {
         appendTreat(treat);
       });
