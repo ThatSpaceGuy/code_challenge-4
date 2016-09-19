@@ -28,13 +28,25 @@ app.use(express.static('server/public'));
 
 // GET route with a Database call
 app.get('/treats', function(req,res){
+  console.log('query is:',req.query.q );
   pg.connect(connectionString, function(err, client, done){
     if (err){
       if (verbose) {console.log(err);}
     } else {
       if (verbose) {console.log('app.get/treats connected');}
       var resultsArray=[];
-      var queryResults=client.query('SELECT * FROM treat ORDER BY name;');
+      var queryResults;
+      var q = req.query.q;
+      // Choose query based on search string
+      if(q){
+        // ILIKE works in postgreSQL for a case-insensitive search
+        queryResults=client.query('SELECT * FROM treat WHERE '+
+        '(name ILIKE \'%'+q+'%\') OR (description ILIKE \'%'+q+'%\');');
+      } else {
+        // There was no specific search query so grab it all!
+        queryResults=client.query('SELECT * FROM treat ORDER BY name;');
+      }
+
       queryResults.on('row',function(row){
         resultsArray.push(row);
       });
